@@ -11,10 +11,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.ix.ibrahim7.stepcounter.R
 import com.ix.ibrahim7.stepcounter.databinding.FragmentMainBinding
-import com.ix.ibrahim7.stepcounter.other.SHARE
 import com.ix.ibrahim7.stepcounter.other.STEPNUMBER
 import com.ix.ibrahim7.stepcounter.service.MyService
 import com.ix.ibrahim7.stepcounter.util.Constant
@@ -31,7 +29,6 @@ class MainFragment : Fragment() , SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        requireActivity().stopService(Intent(requireContext(), MyService::class.java))
         running = true
         val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
@@ -81,6 +78,9 @@ class MainFragment : Fragment() , SensorEventListener {
         mBinding.txtStepCount.setOnLongClickListener {
             previousTotalStep = totalStep
             mBinding.txtStepCount.text = "0"
+            mBinding.circularProgressBar.apply {
+                setProgressWithAnimation(0f)
+            }
             saveDate()
             true
         }

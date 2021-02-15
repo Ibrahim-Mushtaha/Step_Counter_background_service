@@ -1,25 +1,17 @@
 package com.ix.ibrahim7.stepcounter.service
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.hardware.camera2.CameraAccessException
-import android.hardware.camera2.CameraManager
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.ix.ibrahim7.stepcounter.databinding.ActivityMainBinding
 import com.ix.ibrahim7.stepcounter.other.STEPNUMBER
 import com.ix.ibrahim7.stepcounter.util.Constant
-import kotlin.properties.Delegates
 
 
 class MyService : Service(),SensorEventListener {
@@ -41,7 +33,7 @@ class MyService : Service(),SensorEventListener {
         }
 
 
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
 
@@ -61,8 +53,9 @@ class MyService : Service(),SensorEventListener {
         return null
     }
 
-
-
+    override fun stopService(name: Intent?): Boolean {
+        return super.stopService(name)
+    }
 
     override fun onDestroy() {
         val intent = Intent(this,MyPhoneReciver::class.java)
